@@ -7,6 +7,7 @@ app.use(express.json());
 
 
 const posts = {};
+
 app.get("/posts", (req, res) => {
     res.send(posts);
 });
@@ -18,7 +19,7 @@ app.post("/events", (req, res) => {
         posts[id] = { id, title, comments: [] };
     }
     if (type === "CommentCreated") {
-        const { id, content, postId } = req.body;
+        const { id, content, postId } = data;
         const post = posts[postId];
         post.comments.push({ id, content });
     }

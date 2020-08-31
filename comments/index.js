@@ -7,24 +7,29 @@ const axios = require('axios');
 app.use(cors());
 app.use(express.json());
 
-const commentsByPostId = [];
+const commentsByPostId = {};
 
 app.get("/posts/:id/comments", (req, res) => {
     res.send(commentsByPostId[req.params.id] || []);
 });
 
-app.post("/posts/:id/comments", (req, res) => {
+app.post("/posts/:id/comments", async (req, res) => {
     const commentId = randomBytes(4).toString("hex");
     const { content } = req.body;
+
     const comments = commentsByPostId[req.params.id] || [];
     comments.push({ id: commentId, content });
     commentsByPostId[req.params.id] = comments;
 
     const event = {
         type: "CommentCreated",
-        data: { id: commentId }, content, postId: req.params.id
+        data: {
+            id: commentId,
+            content,
+            postId: req.params.id
+        }
     }
-    axios.post("http://localhost:4005/events", event)
+    await axios.post("http://localhost:4005/events", event)
     res.status(201).send(comments);
 });
 

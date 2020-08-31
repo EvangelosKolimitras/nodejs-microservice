@@ -12,8 +12,8 @@ export default function PostList() {
         setPosts(response.data);
     }
 
-    useEffect(() => { fetchPosts("http://localhost:4000/posts"); }, []);
-    console.log(posts);
+    useEffect(() => { fetchPosts("http://localhost:4002/posts"); }, []);
+
     return (
         <div className="d-flex flex-row flex-wrap justify-content-between">
             {
@@ -22,7 +22,7 @@ export default function PostList() {
                         <div className="card" key={post.id} style={{ width: "45%", marginBottom: "20px" }}>
                             <div className="card-body">
                                 <h5 className="card-title">{post.title}</h5>
-                                <CommentList postId={post.id} />
+                                <CommentList comments={post.comments} />
                                 <CommentCreate postId={post.id} />
                             </div>
                         </div>
