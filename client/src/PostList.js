@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import CommentCreate from './CommentCreate'
+import CommentList from './CommentList'
+
 import axios from 'axios';
 
 export default function PostList() {
@@ -20,6 +22,7 @@ export default function PostList() {
                         <div className="card" key={post.id} style={{ width: "45%", marginBottom: "20px" }}>
                             <div className="card-body">
                                 <h5 className="card-title">{post.title}</h5>
+                                <CommentList postId={post.id} />
                                 <CommentCreate postId={post.id} />
                             </div>
                         </div>
