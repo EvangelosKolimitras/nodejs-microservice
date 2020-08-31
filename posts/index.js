@@ -2,13 +2,15 @@ const express = require('express');
 const app = express();
 const { randomBytes } = require('crypto')
 const posts = {};
+const cors = require('cors');
 
+app.use(cors());
 app.use(express.json());
 
 app.get("/posts", (req, res) => {
     res.send(posts);
 });
-// ss
+
 app.post("/posts", (req, res) => {
     const id = randomBytes(4).toString("hex")
     const { title } = req.body;
